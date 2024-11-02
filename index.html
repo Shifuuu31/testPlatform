@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Platform and OS Detection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            display: inline-block;
+        }
+
+        h2 {
+            margin: 0;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Detect Your Platform and Operating System</h1>
+        <button id="detect-button">Detect Platform</button>
+        <div id="result" class="result"></div>
+    </div>
+
+    <script>
+        document.getElementById("detect-button").addEventListener("click", function() {
+            fetch("/detect-platform")
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("result").innerHTML = `
+                        <h2>Detection Result:</h2>
+                        <p><strong>Platform:</strong> ${data.platform}</p>
+                        <p><strong>Operating System:</strong> ${data.os}</p>
+                        <p><strong>User Agent:</strong> ${data.user_agent}</p>
+                        <p><strong>Device Type:</strong> ${data.device}</p>
+                    `;
+                })
+                .catch(error => {
+                    document.getElementById("result").innerHTML = `
+                        <h2>Error:</h2>
+                        <p>Unable to detect platform and OS.</p>
+                    `;
+                });
+        });
+    </script>
+</body>
+</html>
